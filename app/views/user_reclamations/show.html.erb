@@ -1,0 +1,258 @@
+  <% if current_user.is_admin == true %>
+    <nav class="navbar navbar-default" style="background-color: #fff; box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.7); margin-bottom: 0px;">
+      <div >
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div> <!-- End of /.navbar-header -->
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav nav-main" style="text-align: left;">
+                <li><a href="/" style=" padding: 0px;"><img src="/vendor/images/logo.png" style="height: 80px;"></a></li>
+                  <li><a style="color: black; margin: 0px;" href="/">ACCUEIL</a></li>
+
+                <!-- Dropdown Recrutement -->
+                <li class="dropdown">
+                    <a href="#" style="color: black; margin: 0px;">
+                      RECLAMATION
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <% Reclamation.all.order(:titre).each do |r| %>
+                        <li><a href="<%= reclamation_path(r.id) %>"><%= r.titre %></a></li>
+                      <% end %>
+                    </ul>
+                </li> 
+              </ul> <!-- End of /.nav-main -->
+          </div>  <!-- /.navbar-collapse -->
+      </div>  <!-- /.container-fluid -->
+      <div style="position: fixed; right: 20px; top: 20px; color: #fff;">
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModalDecon" style="border-radius: 50%;"><i class="fa fa-user fa-2x"></i></a>
+      </div>
+    </nav>  <!-- End of /.nav -->
+
+    <section>
+      <br>
+      <div class="container text-center" style="background-color: <%= @user_reclamation.reclamation.couleur %>; box-shadow: 0px,0px,15px,0px, red; border-radius: 5px;">
+        <div class="row">
+          <div class="col-md-10">
+            <h4 style="color: #fff;"><%= @user_reclamation.reclamation.titre %></h4>
+          </div>
+          <% if @user_reclamation.resolu == true %>
+            <div class="col-md-2" style="background-color: #74a339; border-radius: 5px;">
+              <h6><%= @user_reclamation.created_at %></h6>
+            </div>
+          <% else %>
+            <div class="col-md-2" style="background-color: #fff; border-radius: 5px;">
+              <h6><%= @user_reclamation.created_at %></h6>
+            </div>
+          <% end %>
+        </div>
+      </div><br>
+
+      <div class="container" style="background-color: rgba(250,250,250,0.8);">
+        <br>
+        <div class="row">
+          <div class="col-md-5 text-right">
+            <h6>L'intéréssé</h6>
+          </div>
+          <div class="col-md-7">
+            <h6><%= @user_reclamation.user.nom %></h6>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-5 text-right">
+            <h6>Numéro d'Identification Fiscale</h6>
+          </div>
+          <div class="col-md-7">
+            <h6><%= @user_reclamation.user.nif %></h6>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-5 text-right">
+            <h6>Contact</h6>
+          </div>
+          <div class="col-md-7">
+            <h6><%= @user_reclamation.user.tel %></h6>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-md-5 text-right">
+            <h6>Identifiant</h6>
+          </div>
+          <div class="col-md-7">
+            <h6><%= @user_reclamation.user.identifian %></h6>
+          </div>
+        </div>
+        <hr>
+        <% @user_reclamation.envoyers.each do |e| %>
+          <div class="row">
+            <div class="col-md-5 text-right">
+              <h6><%= e.titre %></h6>
+            </div>
+            <div class="col-md-7">
+              <object data="<%= e.contenu %>" height="300px;" width="100%"></object>
+            </div>
+          </div>
+          <hr>
+        <% end %>
+        <div class="text-center">
+          <% if @user_reclamation.resolu == true %>
+            <h5 style="background-color: #74a339; color: #fff">
+              Validée le <%= @user_reclamation.updated_at.to_datetime %>
+            </h5>
+          <% else %>
+            <h5><a href="#" data-toggle="modal" data-target="#validation" class="btn btn-primary" style="width: 80%; font-size: 1em;">Valider</a></h5>
+          <% end %>
+        </div>
+      </div>
+    </section>
+    <br>
+    <div class="modal fade" id="validation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h6 class="modal-title text-center" id="myModalLabel">Confirmation</h6>
+              </div>
+              <div class="modal-body clearfix text-center">
+                <p>Voullez-vous vraiment valider cette réclamation ?</p>
+                <%= form_tag user_reclamation_path(@user_reclamation.id), method: :patch, :multipart =>"true" do%>
+                  <input type="submit" name="" value="Oui, valider" class="btn btn-success" style="width: 50%;">
+                <% end %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+              </div>
+          </div>
+        </div>
+    </div>
+
+  <% else %> 
+
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a href="#">
+              <img src="/vendor/images/logo.png" alt="logo">
+            </a>
+          </div>  <!-- End of /.col-md-12 -->
+        </div>  <!-- End of /.row -->
+      </div>  <!-- End of /.container -->
+    </header> <!-- End of /Header -->
+
+    <section>
+      <div class="container text-center" style="border: solid; background-color: rgba(250,250,250,0.8);">
+        <h2 style="color: #50a730;">Votre réclamation a été enregistrée </h2>
+        <h3>Le résponsale va vous contacter le <span id="fepotoana"><%= (@user_reclamation.created_at +  @user_reclamation.reclamation.durre * 60 * 60 * 24).to_date %></span></h3>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="block">
+              <div class="block-heading">
+                <h2>
+                  <a href="#" class="btn btn-success" data-toggle="modal" data-target="#afficher">Afficher</a>
+                  <a href="/" class="btn btn-warning">Nouvelle réclamation</a>
+                  <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModalDecon">Se déconnecter</a>
+                </h2>
+              </div>
+            </div>  <!-- End of /.block -->
+          </div>  <!-- End of /.col-md-12 -->
+        </div> <!-- End Of /.Row -->
+      </div> <!-- End Of /.Container -->
+    </section>  <!-- End of Section -->
+
+    <div class="modal fade" id="afficher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <p>Type de réclamation :</p>
+                <h5 class="modal-title" id="myModalLabel"><%= @user_reclamation.reclamation.titre %></h5>
+              </div>
+              <div class="modal-body clearfix">
+                <% @user_reclamation.envoyers.each do |e| %>
+                  <div class="row">
+                    <div class="col-md-6 text-right">
+                      <h6><i class="fa fa-file"></i> <%= e.titre %></h6>
+                    </div>
+                    <div class="col-md-6">
+                      <object data="<%= e.contenu %>" height="100px;" width="80%"></object>
+                    </div>
+                  </div>
+                  <hr>
+                <% end %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+              </div>
+          </div>
+        </div>
+    </div>
+
+    <section id="call-to-area">
+        <div class="container" style=" margin-top: 0px; margin-bottom: -5vh;">
+          <div class="row">
+            <div class="col-md-12">
+              <div id="owl-example" class="owl-carousel">
+                <div style="background-color: rgba(0,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Réclamations contentieuses</h5>
+                </div>
+                <div style="background-color: rgba(50,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Réclamations gracieuses</h5>
+                </div>
+                <div style="background-color: rgba(100,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Demande de sursis de paiement </h5>
+                </div>
+                <div style="background-color: rgba(150,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Opposition au titre de perception</h5>
+                </div>
+                <div style="background-color: rgba(200,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Opposition aux actes de poursuites </h5>
+                </div>
+                <div style="background-color: rgba(150,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Réclamations contentieuses</h5>
+                </div>
+                <div style="background-color: rgba(100,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Réclamations gracieuses</h5>
+                </div>
+                <div style="background-color: rgba(50,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Demande de sursis de paiement </h5>
+                </div>
+                <div style="background-color: rgba(100,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Opposition au titre de perception</h5>
+                </div>
+                <div style="background-color: rgba(150,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Opposition aux actes de poursuites </h5>
+                </div>
+                <div style="background-color: rgba(200,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Réclamations contentieuses</h5>
+                </div>
+                <div style="background-color: rgba(150,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Réclamations gracieuses</h5>
+                </div>
+                <div style="background-color: rgba(100,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Demande de sursis de paiement </h5>
+                </div>
+                <div style="background-color: rgba(50,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Opposition au titre de perception</h5>
+                </div>
+                <div style="background-color: rgba(100,50,150,0.5); border:solid; border-color: grey; border-radius: 10%; text-align: center; margin-left: 5px; margin-right: 5px; height: 15vh;">
+                  <h5 style="color: #fff;">Opposition aux actes de poursuites </h5>
+                </div>
+              </div>  <!-- End of /.Owl-Slider -->
+            </div>  <!-- End of /.col-md-12 -->
+          </div> <!-- End Of /.Row -->
+        </div> <!-- End Of /.Container -->
+    </section>  <!-- End of Section -->
+
+  <% end %>

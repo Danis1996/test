@@ -1,0 +1,164 @@
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <a href="#" style="background-color: transparent;">
+              <img src="/vendor/images/logo.png" alt="logo">
+            </a>
+          </div>  <!-- End of /.col-md-12 -->
+        </div>  <!-- End of /.row -->
+      </div>  <!-- End of /.container -->
+    </header> <!-- End of /Header -->
+
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-9 clearfix">
+            <ul >
+                <li>
+                    <div class="blog-box" style="background-color: rgba(0,0,0,0.5);">
+                        
+                        <div class="blog-post-body clearfix">
+                          <a href="blog-single.html">
+                            <h2 style="text-align: center;">Veuillez choisir votre type de réclamation</h2>
+                          </a>
+
+                          <% @reclamations.each_with_index do |typa, x| %>
+                            <div class=" container" style=" margin-bottom: 15px;">
+                              <a href="#" style="width: 100%; font-size: 1.5em; color: #fff; background-color: <%= typa.couleur %>" class="btn btn-default" data-toggle="modal" data-target="#mod<%= typa.id %>"><%= typa.titre %></a>
+                            </div>
+                          <% end %>
+                          
+                        </div>
+                    </div>  <!-- End of /.blog-box -->
+                </li>
+                
+              </ul> <!-- End of /.blog-zone -->
+
+          </div>  <!-- End of /.col-md-9 -->
+
+          <div class="col-md-3" style="background-color: rgba(0,0,0,0.5);">
+            <div class="blog-sidebar">
+              <div class="block vert">
+                    <div id="my-calendar" style="color: #74a339;"></div>
+              </div>  <!-- End of /.block -->
+            </div>  <!-- End of /.blog-sidebar -->
+          </div>  <!-- End of /.col-md-3 -->
+        </div>  <!-- End of /.row -->
+      </div>  <!-- End of /.container -->
+    </section>  <!-- End of /#Blog -->
+
+  <% Reclamation.all.each do |t| %>
+    <div class="modal fade" id="mod<%= t.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="container">
+            <div class="container" style="width: 100%; text-align: center;">
+                <h3 style="color: <%= t.couleur %>"><%= t.titre %></h3>
+                <div class="form_content clearfix">
+                  <hr>
+                  <div class="container text-left">
+                    <% t.fichier_reclamations.each_with_index do |ft, y| %>
+                      <% if ft.fichier.titre == "Acte d’imposition" %>
+                        <div>
+                          <h5><i class="fa fa-file" style="color: <%= t.couleur %>"></i> Acte d’imposition</h5>
+                          <div class="container" style="margin-left: 10%; width: 90%;">
+                            
+                            <div class="row">
+                              <div class="col-md-6">
+                                <input onclick="mampisehoInput<%= t.id %>()" type="checkbox" name="Déclaration (DE)">Déclaration (DE)
+                              </div>
+                              <div class="col-md-6">
+                                <input onclick="mampisehoInput<%= t.id %>()" type="checkbox" name="Déclaration (DE)">Notification définitive
+                              </div>
+                              <div class="col-md-6">
+                                <input onclick="mampisehoInput<%= t.id %>()" type="checkbox" name="Déclaration (DE)">Taxation d’office
+                              </div>
+                              <div class="col-md-6">
+                                <input onclick="mampisehoInput<%= t.id %>()" type="checkbox" name="Déclaration (DE)">Avis d’imposition (IFT/IFPB)
+                              </div>
+                            </div>
+                          </div>
+                          <input onchange="miditra<%= ft.fichier.id %>_<%= ft.id %>(this)" type="hidden" id="apotra<%= t.id %>" name="<%= ft.fichier.id %>" class="form-control lokoMaron" accept=".pdf, .jpg, .png" style="margin-left: 10%; width: 90%;">
+                        </div>
+                      <% else %>
+                        <div>
+                          <h5><i class="fa fa-file" style="color: <%= t.couleur %>"></i> <%= ft.fichier.titre %></h5>
+                          <input id="inp<%= ft.fichier.id%>_<%= y %>_<%= t.id %>" type="file" name="<%= ft.fichier.id %>" class="form-control lokoMavo" accept=".pdf, .jpg, .png" onchange="miditra<%= ft.fichier.id %>_<%= ft.id %>(this)" style="margin-left: 10%; width: 90%;">
+                        </div>
+                      <% end %>
+                    <% end %>
+                
+                  </div>
+                  <br>  
+                  <button class="btn btn-default" style="background-color: <%= t.couleur %>" data-dismiss="modal" onclick="sub<%= t.id %>()">Valider</button>  
+                </div>
+            </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
+              </div>
+          </div>
+        </div>
+    </div>
+  <% end %>
+
+  <% Reclamation.all.each do |t| %>
+    <%= form_tag user_reclamations_path, method: :post, :multipart =>"true" , :id=>"form#{t.id}" do%>
+    <input type="hidden" name="typ<%= t.id %>" id="doc<%= t.id %>">
+      <% t.fichier_reclamations.each do |ft| %>
+        <% if ft.fichier.titre == "Acte d’imposition" %>
+          <input type="hidden" name="<%= ft.fichier.id %>" id="hid<%= ft.fichier.id %>hid<%= ft.id %>" >
+        <% else %>
+          <input type="hidden" name="<%= ft.fichier.id %>" id="hid<%= ft.fichier.id %>hid<%= ft.id %>" >
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <script type="text/javascript">
+
+    <% Reclamation.all.each do |t| %>
+      <% t.fichier_reclamations.each_with_index do |ft, y| %>
+        function miditra<%= ft.fichier.id %>_<%= ft.id %> (inp) {
+          console.log(inp.value);
+
+            if (inp.files && inp.files[0]) {
+              var FR= new FileReader();
+              
+              FR.addEventListener("load", function(e) {
+                document.getElementById('hid<%= ft.fichier.id %>hid<%= ft.id %>').value = e.target.result;
+              }); 
+              
+              FR.readAsDataURL( inp.files[0] );
+            }
+        }
+      <% end %>
+    <% end %>
+    <% Reclamation.all.each do |t| %>
+
+      function mampisehoInput<%= t.id %>(){
+        document.getElementById('apotra<%= t.id %>').type = "file";
+      }
+
+      function sub<%= t.id %>() {
+
+        if (document.getElementById('apotra<%= t.id %>') && document.getElementById('apotra<%= t.id %>').value == "") {
+            alert("Veuillez inserer l'acte d'imposition");
+          }
+
+        <% t.fichier_reclamations.each_with_index do |ft, y| %>
+          else if (document.getElementById('inp<%= ft.fichier.id %>_<%= y %>_<%= t.id %>') && document.getElementById('inp<%= ft.fichier.id %>_<%= y %>_<%= t.id %>').value == "") {
+            alert("Veuillez inserer <%= ft.fichier.titre %>");
+          }
+        <% end %>
+
+        else{
+          document.getElementById('doc<%= t.id %>').value = <%= t.id %>;
+          document.getElementById('form<%= t.id %>').submit();
+        }
+      }
+
+    <% end %>
+
+  </script>

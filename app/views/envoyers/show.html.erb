@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User reclamation:</strong>
+  <%= @envoyer.user_reclamation_id %>
+</p>
+
+<p>
+  <strong>Titre:</strong>
+  <%= @envoyer.titre %>
+</p>
+
+<p>
+  <strong>Contenu:</strong>
+  <%= @envoyer.contenu %>
+</p>
+
+<%= link_to 'Edit', edit_envoyer_path(@envoyer) %> |
+<%= link_to 'Back', envoyers_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Titre:</strong>
+  <%= @fichier.titre %>
+</p>
+
+<p>
+  <strong>Contenu:</strong>
+  <%= @fichier.contenu %>
+</p>
+
+<%= link_to 'Edit', edit_fichier_path(@fichier) %> |
+<%= link_to 'Back', fichiers_path %>

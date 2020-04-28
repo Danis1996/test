@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reclamation:</strong>
+  <%= @fichier_reclamation.reclamation_id %>
+</p>
+
+<p>
+  <strong>Fichier:</strong>
+  <%= @fichier_reclamation.fichier_id %>
+</p>
+
+<%= link_to 'Edit', edit_fichier_reclamation_path(@fichier_reclamation) %> |
+<%= link_to 'Back', fichier_reclamations_path %>

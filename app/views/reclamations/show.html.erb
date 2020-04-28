@@ -1,0 +1,198 @@
+  <nav class="navbar navbar-default" style="background-color: #fff; box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.7); margin-bottom: 0px;">
+    <div >
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div> <!-- End of /.navbar-header -->
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav nav-main" style="text-align: left;">
+              <li><a href="/" style=" padding: 0px;"><img src="/vendor/images/logo.png" style="height: 80px;"></a></li>
+                <li><a style="color: black; margin: 0px;" href="/">ACCUEIL</a></li>
+
+              <!-- Dropdown Recrutement -->
+              <li class="dropdown">
+                  <a href="#" style="color: black; margin: 0px;">
+                    RECLAMATION
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% Reclamation.all.order(:titre).each do |r| %>
+                      <li><a href="<%= reclamation_path(r.id) %>"><%= r.titre %></a></li>
+                    <% end %>
+                  </ul>
+              </li> 
+            </ul> <!-- End of /.nav-main -->
+        </div>  <!-- /.navbar-collapse -->
+    </div>  <!-- /.container-fluid -->
+    <div style="position: fixed; right: 20px; top: 20px; color: #fff;">
+      <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModalDecon" style="border-radius: 50%;"><i class="fa fa-user fa-2x"></i></a>
+    </div>
+  </nav>  <!-- End of /.nav -->
+
+
+<section>
+  <br>
+    <div class="container text-center" style="background-color: <%= @reclamation.couleur %>; box-shadow: 0px,0px,15px,0px, red; border-radius: 5px;">
+      <div class="row">
+        <div class="col-md-10">
+          <h4 style="color: #fff;"><%= @reclamation.titre %></h4>
+        </div>
+          <div class="col-md-2" style="background-color: #fff; border-radius: 5px;">
+            <h4><%= @user_reclamations.count %></h4>
+          </div>
+      </div>
+    </div><br>
+  <br>
+  <div class="container" style="border: solid; border-width: 1px; border-color: #fff; background-color: rgba(0,0,0,0.5 ); min-height: 60vh;">
+    <div class="col-md-4">
+      <div style="background-color: #fff; text-align: center;">
+        <% if @nouvelles.count > 0 %>
+          <div style="position: absolute; background-color: red; border-radius: 50%; min-width: 30px;">
+            <h5 style="margin: 0px; color: #fff;"><%= @nouvelles.count %></h5>
+          </div>
+        <% end %>
+        <h5>Nouvelles réclamations</h5>
+      </div>
+      <% @nouvelles.each do |n| %>
+        <div>
+          <!--Accordion wrapper-->
+            <div class="accordion md-accordion accordion-4" id="accordionEx<%= n.id %>" role="tablist" aria-multiselectable="true">
+              <div class="card" style="background-color: <%= @reclamation.couleur %>; box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.7);">
+                <!-- Card header -->
+                  <div class="card-header z-depth-1 teal lighten-3" role="tab" id="heading1">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx<%= n.id %>" href="#collapse<%= n.id %>"
+                      aria-expanded="false" aria-controls="collapse<%= n.id %>" style="color: #fff;">
+                      <h6 class="container" style="color: #fff;">
+                        <%= n.user.nom %>
+                      </h6>  
+                      <p class="text-right container" style="color: #fff;"><%= n.created_at.to_date %> <i class="fa fa-chevron-down"></i></p>
+                    </a>
+                  </div>
+                  <!-- Card body -->
+                  <div id="collapse<%= n.id %>" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx<%= n.id %>" style="background-color: #fff; margin-bottom: 10px;/*border-left: solid; border-width: 0.5px; border-color: grey*/;">
+                    <div class="card-body rgba-teal-strong white-text container">
+                      <div class="text-center">
+                        <p style="font-size: 1.2em; margin-top: 5px;" ><%= n.reclamation.titre %></p>
+                        <p>NIF <%= n.user.nif %></p>
+                      </div>
+                      <% n.envoyers.each do |e| %>
+                        <div class="text-right">
+                          <p style="text-align: left;"><i class="fa fa-file"></i> <%= e.titre %> </p>
+                          <object data="<%= e.contenu %>" height="50px"></object>
+                        </div>
+                      <% end %>
+
+                      <div class="text-center">
+                        <p><a href="<%= user_reclamation_path(n.id) %>" class="btn btn-warning" style="width: 90%;">Afficher</a></p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <div style="background-color: #fff; text-align: center;">
+        <% if @attentes.count > 0 %>
+          <div style="position: absolute; background-color: red; border-radius: 50%; min-width: 30px;">
+            <h5 style="margin: 0px; color: #fff;"><%= @attentes.count %></h5>
+          </div>
+        <% end %>
+        <h5>Réclamations en attentes</h5>
+      </div>
+      <% @attentes.each do |n| %>
+        <div>
+          <!--Accordion wrapper-->
+            <div class="accordion md-accordion accordion-4" id="accordionEx<%= n.id %>" role="tablist" aria-multiselectable="true">
+              <div class="card" style="background-color: <%= @reclamation.couleur %>; box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.7);">
+                <!-- Card header -->
+                  <div class="card-header z-depth-1 teal lighten-3" role="tab" id="heading1">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx<%= n.id %>" href="#collapse<%= n.id %>"
+                      aria-expanded="false" aria-controls="collapse<%= n.id %>" style="color: #fff;">
+                      <h6 class="container" style="color: #fff;">
+                        <%= n.user.nom %>
+                      </h6>  
+                      <p class="text-right container" style="color: #fff;"><%= n.created_at.to_date %> <i class="fa fa-chevron-down"></i></p>
+                    </a>
+                  </div>
+                  <!-- Card body -->
+                  <div id="collapse<%= n.id %>" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx<%= n.id %>" style="background-color: #fff; margin-bottom: 10px;/*border-left: solid; border-width: 0.5px; border-color: grey*/;">
+                    <div class="card-body rgba-teal-strong white-text container">
+                      <div class="text-center">
+                        <p style="font-size: 1.2em; margin-top: 5px;" ><%= n.reclamation.titre %></p>
+                        <p>NIF <%= n.user.nif %></p>
+                      </div>
+                      <% n.envoyers.each do |e| %>
+                        <div class="text-right">
+                          <p style="text-align: left;"><i class="fa fa-file"></i> <%= e.titre %> </p>
+                          <object data="<%= e.contenu %>" height="50px"></object>
+                        </div>
+                      <% end %>
+
+                      <div class="text-center">
+                        <p><a href="<%= user_reclamation_path(n.id) %>" class="btn btn-warning" style="width: 90%;">Afficher</a></p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-4">
+      <div style="background-color: #fff; text-align: center;">
+        <% if @valides.count > 0 %>
+          <div style="position: absolute; background-color: #74a339; border-radius: 50%; min-width: 30px;">
+            <h5 style="margin: 0px; color: #fff;"><%= @valides.count %></h5>
+          </div>
+        <% end %>
+        <h5>Réclamations validées</h5>
+      </div>
+      <% @valides.reverse.each do |n| %>
+        <div>
+          <!--Accordion wrapper-->
+            <div class="accordion md-accordion accordion-4" id="accordionEx<%= n.id %>" role="tablist" aria-multiselectable="true">
+              <div class="card" style="background-color: <%= @reclamation.couleur %>; box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.7);">
+                <!-- Card header -->
+                  <div class="card-header z-depth-1 teal lighten-3" role="tab" id="heading1">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx<%= n.id %>" href="#collapse<%= n.id %>"
+                      aria-expanded="false" aria-controls="collapse<%= n.id %>" style="color: #fff;">
+                      <h6 class="container" style="color: #fff;">
+                        <%= n.user.nom %>
+                      </h6>  
+                      <p class="text-right container" style="color: #fff;"><%= n.created_at.to_date %> <i class="fa fa-chevron-down"></i></p>
+                    </a>
+                  </div>
+                  <!-- Card body -->
+                  <div id="collapse<%= n.id %>" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordionEx<%= n.id %>" style="background-color: #fff; margin-bottom: 10px;/*border-left: solid; border-width: 0.5px; border-color: grey*/;">
+                    <div class="card-body rgba-teal-strong white-text container">
+                      <div class="text-center">
+                        <p style="font-size: 1.2em; margin-top: 5px;" ><%= n.reclamation.titre %></p>
+                        <p>NIF <%= n.user.nif %></p>
+                      </div>
+                      <% n.envoyers.each do |e| %>
+                        <div class="text-right">
+                          <p style="text-align: left;"><i class="fa fa-file"></i> <%= e.titre %> </p>
+                          <object data="<%= e.contenu %>" height="50px"></object>
+                        </div>
+                      <% end %>
+
+                      <div class="text-center">
+                        <p><a href="<%= user_reclamation_path(n.id) %>" class="btn btn-warning" style="width: 90%;">Afficher</a></p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <br>
+</section>

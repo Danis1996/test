@@ -69,6 +69,6 @@ class EnvoyersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def envoyer_params
-      params.require(:envoyer).permit(:user_reclamation_id, :titre, :contenu)
+      params.require(:envoyer).permit(:titre, :contenu, :user_reclamation_id)
     end
 end

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Envoyers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User reclamation</th>
+      <th>Titre</th>
+      <th>Contenu</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @envoyers.each do |envoyer| %>
+      <tr>
+        <td><%= envoyer.user_reclamation_id %></td>
+        <td><%= envoyer.titre %></td>
+        <td><%= envoyer.contenu %></td>
+        <td><%= link_to 'Show', envoyer %></td>
+        <td><%= link_to 'Edit', edit_envoyer_path(envoyer) %></td>
+        <td><%= link_to 'Destroy', envoyer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Envoyer', new_envoyer_path %>

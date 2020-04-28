@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  reclamation: one
+  date: MyString
+  vue: false
+  resolu: false
+
+two:
+  user: two
+  reclamation: two
+  date: MyString
+  vue: false
+  resolu: false

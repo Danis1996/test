@@ -1,0 +1,32 @@
+<%= form_with(model: reclamation, local: true) do |form| %>
+  <% if reclamation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reclamation.errors.count, "error") %> prohibited this reclamation from being saved:</h2>
+
+      <ul>
+        <% reclamation.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :durre %>
+    <%= form.number_field :durre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :titre %>
+    <%= form.text_field :titre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :couleur %>
+    <%= form.text_field :couleur %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

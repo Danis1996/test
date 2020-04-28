@@ -1,15 +1,120 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>EOlana</title>
+    <meta charset="UTF-8">
+    <title>E-olana</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700' rel='stylesheet' type='text/css'>
+
+  <!-- Css -->
+  <link rel="stylesheet" href="/vendor/css/nivo-slider.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/css/owl.carousel.css">
+  <link rel="stylesheet" href="/vendor/css/owl.theme.css">
+  <link rel="stylesheet" href="/vendor/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/vendor/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/vendor/css/style.css">
+  <link rel="stylesheet" href="/vendor/css/responsive.css">
+
+  <!-- jS -->
+  <script src="/vendor/js/jquery.min.js" type="text/javascript"></script>
+  <script src="/vendor/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="/vendor/js/jquery.nivo.slider.js" type="text/javascript"></script>
+  <script src="/vendor/js/owl.carousel.min.js" type="text/javascript"></script>
+  <script src="/vendor/js/main.js" type="text/javascript"></script>
   </head>
 
   <body>
+    <% if current_user %>
+    <div style="position: fixed; right: 20px; top: 20px; color: #fff;">
+      <a href="#" class="btn btn-default" data-toggle="modal" data-target="#myModalDecon" style="border-radius: 50%;"><i class="fa fa-user fa-2x"></i></a>
+    </div>
+    <% else %>
+    <% end %>
+
+
+  <div class="modal fade" id="myModalDecon" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h5 class="modal-title" id="myModalLabel">Voulez-vous vraiment fermer votre session ?</h5>
+              </div>
+              <div class="modal-body clearfix text-center">
+                <%= button_to "Se deconnecter", destroy_user_session_path, method: :delete , :class=>"btn btn-danger" %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+              </div>
+          </div>
+        </div>
+  </div>  
+  <% unless flash.empty? %>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type%> alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <p><i class="fa fa-bell" style="color: #FF7514;"> </i>  <%=message%></p>      
+      </div>
+    <% end %>
+  <%end%>
     <%= yield %>
   </body>
+
+  <style type="text/css">
+    body {
+      background-image: url(/vendor/images/back.jpg); 
+      background-size: cover;
+    }
+    .alert {
+      position:fixed;
+      z-index:999;
+      border: solid;
+      border-width: 0.1em;
+      border-color: #74a339;
+      background-color: #fff;
+      margin-top: 15px;
+      background-color: rgba(450,250,250,0.5);
+      text-align: center;
+      min-width: 70%;
+    }
+    @keyframes transition {
+      0%   { margin-left: 0px;opacity:0; }
+      15% { margin-left: 15%;opacity:1; }
+      85% { margin-left: 15%;opacity:1; }
+      100% { margin-left: 100%;opacity:0; }
+      }
+      .alert {opacity:0;animation: transition 6s ease-in-out 0.5s forwards;}
+
+  </style>
+
+    <input type="hidden" name="olona" value="0" id="olona">
+  <input type="hidden" name="login" value="login" id="pejy">
+
+  <!--  ====================== Calendar ================= -->
+
+    <link rel="stylesheet" type="text/css" href="/vendor/css/zabuto_calendar.css">
+    <link href="/vendor/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <script src="/vendor/lib/chart-master/Chart.js"></script>
+    <script class="include" type="text/javascript" src="/vendor/lib/jquery.dcjqaccordion.2.7.js"></script>
+
+    <script src="/vendor/lib/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="/vendor/lib/jquery.sparkline.js"></script>
+    <!--common script for all pages-->
+    <script src="/vendor/lib/common-scripts.js"></script>
+    <script type="text/javascript" src="/vendor/lib/gritter/js/jquery.gritter.js"></script>
+    <script type="text/javascript" src="/vendor/lib/gritter-conf.js"></script>
+    <!--script for this page-->
+    <script src="/vendor/lib/sparkline-chart.js"></script>
+    <script src="/vendor/lib/zabuto_calendar.js"></script>
+    <script src="/vendor/js/calendrier.js"></script>
+
+  <!--  ====================== Calendar ================= -->
+
 </html>

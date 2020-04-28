@@ -1,0 +1,32 @@
+<%= form_with(model: envoyer, local: true) do |form| %>
+  <% if envoyer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(envoyer.errors.count, "error") %> prohibited this envoyer from being saved:</h2>
+
+      <ul>
+        <% envoyer.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_reclamation_id %>
+    <%= form.text_field :user_reclamation_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :titre %>
+    <%= form.text_field :titre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :contenu %>
+    <%= form.text_field :contenu %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
