@@ -25,6 +25,16 @@
                       <li><a href="<%= reclamation_path(r.id) %>"><%= r.titre %></a></li>
                     <% end %>
                   </ul>
+              </li>
+              <li>
+                <a style="color: black; margin: 0px;" href="<%= fichier_reclamation_path(1) %>">
+                  <% if UserReclamation.where(resolu: true).count > 1 %>
+                  <%= UserReclamation.where(resolu: true).count %> RECLAMATIONS VALIDEES
+                  <% else %>
+                  <%= UserReclamation.where(resolu: true).count %> RECLAMATION VALIDEE
+                  <% end %>
+                </a>
+
               </li> 
             </ul> <!-- End of /.nav-main -->
         </div>  <!-- /.navbar-collapse -->

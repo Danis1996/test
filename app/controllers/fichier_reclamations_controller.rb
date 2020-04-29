@@ -19,6 +19,7 @@ class FichierReclamationsController < ApplicationController
   # GET /fichier_reclamations/1
   # GET /fichier_reclamations/1.json
   def show
+    @valides = UserReclamation.where(resolu: true)
   end
 
   # GET /fichier_reclamations/new

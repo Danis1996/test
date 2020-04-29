@@ -1,0 +1,45 @@
+  <script type="text/javascript">
+    function mampisehoDaty(daty) {
+    var andro = daty[0] + daty[1];
+    var volana = parseInt(daty[3] + daty[4]) - 1;
+    var taona = daty[6] + daty[7];
+    if (volana == 0) {
+      volana = "Janvier";
+    }
+    if (volana == 1) {
+      volana = "Fevrier";
+    }
+    if (volana == 2) {
+      volana = "Mars";
+    }
+    if (volana == 3) {
+      volana = "Avril";
+    }
+    if (volana == 4) {
+      volana = "Mai";
+    }
+    if (volana == 5) {
+      volana = "Juin";
+    }
+    if (volana == 6) {
+      volana = "Juillet";
+    }
+    if (volana == 7) {
+      volana = "Août";
+    }
+    if (volana == 8) {
+      volana = "Septembre";
+    }
+    if (volana == 9) {
+      volana = "Octobre";
+    }
+    if (volana == 10) {
+      volana = "Novembre";
+    }
+    if (volana == 11) {
+      volana = "Décembre";
+    }
+    var valiny = andro + " " + volana + " 20" + taona ;
+    return valiny;
+  }
+  </script>

@@ -7,6 +7,40 @@ class UserReclamationsController < ApplicationController
     @user_reclamations = UserReclamation.all
     @nouvelles = UserReclamation.where(vue: false)
     @attentes = UserReclamation.where(vue: true ,resolu: false)
+
+    # def mampisehoDaty(daty)
+    #   andro = daty[0] + daty[1]
+    #   volana = (daty[3] + daty[4]).to_i
+    #   taona = daty[6] + daty[7]
+    #   case volana
+    #     when 1
+    #       volana = "Janvier"
+    #     when 2
+    #       volana = "Fevrier"
+    #     when 3
+    #       volana = "Mars"
+    #     when 4
+    #       volana = "Avril"
+    #     when 5
+    #       volana = "Mai"
+    #     when 6
+    #       volana = "Juin"
+    #     when 7
+    #       volana = "Juillet"
+    #     when 8
+    #       volana = "Août"
+    #     when 9
+    #       volana = "Septembre"
+    #     when 10
+    #       volana = "Octobre"
+    #     when 11
+    #       volana = "Novembre"
+    #     when 12
+    #       volana = "Décembre"
+    #   end
+    #   valiny = andro + " " + volana + " 20" + taona
+    #   return valiny
+    # end
   end
 
   # GET /user_reclamations/1
