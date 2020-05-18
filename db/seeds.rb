@@ -9,7 +9,7 @@
 user_1 = User.create(
 			nom: 'RAJAONARISON Fidel', 
 			nif: "0123456789" , 
-			email: "C.fidel.dgi@gmail.com", 
+			email: "fidel@gmail.com", 
 			password: "0123456789",
 			identifian: "C.fidel.dgi",
 			tel: "034 39 052 25"
@@ -19,7 +19,7 @@ user_1 = User.create(
 user_2 = User.create(
 			nom: 'Societé RABEZA', 
 			nif: "0000000000" , 
-			email: "S.rabeza.dgi@gmail.com", 
+			email: "Srabeza@gmail.com", 
 			password: "0000000000",
 			identifian: "S.rabeza.dgi",
 			tel: "22 274 32"
@@ -29,7 +29,7 @@ user_2 = User.create(
 user_3 = User.create(
 			nom: 'Agence TARATRA', 
 			nif: "1111111111" , 
-			email: "S.taratra.dgi@gmail.com", 
+			email: "Staratra.com", 
 			password: "1111111111",
 			identifian: "S.taratra.dgi",
 			tel: "22 645 85"
@@ -39,7 +39,7 @@ user_3 = User.create(
 user_4 = User.create(
 			nom: 'Tranombarotra BAKOLY', 
 			nif: "2222222222" , 
-			email: "S.bakoly.dgi@gmail.com", 
+			email: "Sbakoly@gmail.com", 
 			password: "2222222222",
 			identifian: "S.bakoly.dgi",
 			tel: "033 09 460 09"
@@ -56,11 +56,11 @@ user_5 = User.create(
 			is_admin: true
 	)
 
-reclamation_1 = Reclamation.create(titre:"Réclamations contentieuses" , durre: 30, couleur: "#3291a0")
-reclamation_2 = Reclamation.create(titre:"Réclamations gracieuses" , durre: 15, couleur: "#dc7a40")
+reclamation_1 = Reclamation.create(titre:"Réclamations contentieuses" , durre: 60, couleur: "#3291a0")
+reclamation_2 = Reclamation.create(titre:"Réclamations gracieuses" , durre: 60, couleur: "#dc7a40")
 reclamation_3 = Reclamation.create(titre:"Demande de sursis de paiement" , durre: 10, couleur: "#ff5d5d")
-reclamation_4 = Reclamation.create(titre:"Opposition au titre de perception" , durre: 7, couleur: "#b25dff")
-reclamation_5 = Reclamation.create(titre:"Opposition aux actes de poursuites" , durre: 20, couleur: "#3a9c12")
+reclamation_4 = Reclamation.create(titre:"Opposition au titre de perception" , durre: 30, couleur: "#b25dff")
+reclamation_5 = Reclamation.create(titre:"Opposition aux actes de poursuites" , durre: 10, couleur: "#3a9c12")
 
 fichier_1 = Fichier.create(titre: "Acte d’imposition")
 fichier_2 = Fichier.create(titre: "Titre de perception")

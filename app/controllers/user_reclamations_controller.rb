@@ -100,7 +100,7 @@ class UserReclamationsController < ApplicationController
   # PATCH/PUT /user_reclamations/1.json
   def update
     @user_reclamation.update(resolu: true)
-    redirect_to @user_reclamation, notice: 'Réclamation validée avec succée.'
+    redirect_to @user_reclamation, notice: 'Réclamation validée avec succès.'
   end
 
   # DELETE /user_reclamations/1
@@ -108,7 +108,7 @@ class UserReclamationsController < ApplicationController
   def destroy
     @user_reclamation.destroy
     respond_to do |format|
-      format.html { redirect_to user_reclamations_url, notice: 'User reclamation was successfully destroyed.' }
+      format.html { redirect_to user_reclamations_url, notice: 'Réclamation supprimée' }
       format.json { head :no_content }
     end
   end

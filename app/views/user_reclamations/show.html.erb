@@ -107,7 +107,7 @@
         <div class="text-center">
           <% if @user_reclamation.resolu == true %>
             <h5 style="background-color: #74a339; color: #fff">
-              Validée le <%= @user_reclamation.updated_at.to_datetime %>
+              Validée le <output id="daty_validation_<%= @user_reclamation.id %>"></output>
             </h5>
           <% else %>
             <h5><a href="#" data-toggle="modal" data-target="#validation" class="btn btn-primary" style="width: 80%; font-size: 1em;">Valider</a></h5>
@@ -275,6 +275,11 @@
 
       if (document.getElementById("fepotoana") != null) {
         document.getElementById("fepotoana").value = fetra;
+      }
+
+      if (document.getElementById("daty_validation_<%= @user_reclamation.id %>") != null) {
+        var date_de_validation = mampisehoDaty("<%= @user_reclamation.updated_at.to_date.strftime("%d-%m-%y").to_s %>");
+        document.getElementById("daty_validation_<%= @user_reclamation.id %>").value = date_de_validation;
       }
 
   </script>
