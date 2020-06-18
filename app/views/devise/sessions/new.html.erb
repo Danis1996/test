@@ -156,11 +156,12 @@
 <script type="text/javascript">
   
   function inputIdentifiant(inp) {
-    if (inp.value == "admin.dgi") {
-      document.getElementById('mail').value = inp.value + "@gmail.com";
-    }else {
-      document.getElementById('mail').value = inp.value;
-    }
+
+    <% User.all.each do |user| %>
+      if (inp.value == "<%= user.identifian %>") {
+        document.getElementById('mail').value = "<%= user.email %>";
+      }
+    <% end %>
   }
 
   function inputNif(inp) {
